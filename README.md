@@ -3,7 +3,7 @@ Basic client for Dogor.io, written in Python using Qt 6.4.
 
 ## Prerequisites
 You need Git, Python 3.10+ and Pip installed.  
-This guide assumes Python is available behind the `python` alias, and Pip behind `pip` alias.
+This guide assumes Python is available behind the `python` alias, and Pip behind `pip`.
 
 ## Installation
 
