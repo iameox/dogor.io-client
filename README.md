@@ -6,7 +6,6 @@ You need Git, Python 3.10+ and Pip installed.
 This guide assumes Python is available behind the `python` alias, and Pip behind `pip`.
 
 ## Installation
-
 To install the client, run the following commands:
 ```
 $ git clone https://github.com/iameox/dogor.io-client.git
