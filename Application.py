@@ -17,6 +17,7 @@ class Application(QApplication):
         self.__websocket = QWebSocket()
         self.__dialog = Dialog()
         self.__main_window = MainWindow()
+        self.__playing = False
 
     def setup(self) -> None:
         self.setWindowIcon(QIcon('icon.png'))
@@ -25,6 +26,8 @@ class Application(QApplication):
         self.__setup_websocket()
         self.__dialog.setup()
         self.__main_window.setup()
+
+        self.__dialog.connect_button().clicked.connect(self.__set_playing)
 
     def __setup_state_machine(self) -> None:
         disconnected_state, connecting_state, connected_state = QState(), QState(), QState()
@@ -67,20 +70,20 @@ class Application(QApplication):
             type, data = message['type'], message['data']
 
             match type:
-                case '0':
+                case 0:
+                    self.__main_window.canvas().goals(data['goals'])
                     self.__main_window.canvas().setFixedSize(data['width'] / 10, data['height'] / 10)
                     self.__main_window.setFixedSize(data['width'] / 10, data['height'] / 10)
 
-                case '1' | '2':
-                    self.__main_window.canvas().goals(data['goals'])
-                    self.__main_window.canvas().entities(data['entities'])
+                case 1:
+                    self.__main_window.canvas().entities(data)
                     self.__main_window.canvas().repaint()
 
-                    if type == '2':
+                    if self.__playing:
                         pos = self.__main_window.canvas().mapFromGlobal(QCursor().pos())
 
                         self.__websocket.sendTextMessage(json.dumps({
-                            'type': '0',
+                            'type': 0,
                             'data': {
                                 'x': pos.x() * 10,
                                 'y': pos.y() * 10
@@ -90,6 +93,9 @@ class Application(QApplication):
         self.__dialog.connect_button().clicked.connect(connect_button_clicked)
         self.__websocket.textMessageReceived.connect(text_message_received)
         self.__main_window.new_connection_action().triggered.connect(self.__websocket.close)
+
+    def __set_playing(self) -> None:
+        self.__playing = self.__dialog.mode_field().currentText() == 'play'
 
     def exec(self) -> int:
         self.__state_machine.start()

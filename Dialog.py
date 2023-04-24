@@ -15,6 +15,9 @@ class Dialog(QDialog):
         self.__connect_button = QPushButton('Connect', self)
         self.__error_label = QLabel(self)
 
+    def mode_field(self) -> QComboBox:
+        return self.__mode_field
+
     def connect_button(self) -> QAbstractButton:
         return self.__connect_button
 
@@ -29,7 +32,7 @@ class Dialog(QDialog):
 
         url = protocol + '://' + host + ':' + port + '/' + mode
         if mode == 'play':
-            url += '/' + str(self.__color_field.currentIndex() + 1)
+            url += '?type=' + str(self.__color_field.currentIndex() + 1)
 
         return url
 
@@ -68,7 +71,7 @@ class Dialog(QDialog):
             layout.addWidget(label, 0, 2 * i)
 
         for i, item in enumerate([self.__protocol_field, QLabel('://'), self.__host_field, QLabel(':'),
-                                  self.__port_field, QLabel('/'), self.__mode_field, QLabel('/'), self.__color_field]):
+                                  self.__port_field, QLabel('/'), self.__mode_field, QLabel('?type='), self.__color_field]):
             layout.addWidget(item, 1, i)
 
         layout.addWidget(self.__connect_button, 3, 0, 1, 9)
