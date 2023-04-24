@@ -9,7 +9,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.__canvas = Canvas(self)
+        self.__canvas = Canvas()
         self.__new_connection_action = QAction('&New connection...', self)
         self.__github_action = QAction('&GitHub...', self)
 
@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle('Dogor.io')
         self.setWindowFlags(Qt.WindowType.WindowCloseButtonHint | Qt.WindowType.WindowMinimizeButtonHint)
+        self.setCentralWidget(self.__canvas)
         self.__github_action.triggered.connect(lambda: QDesktopServices.openUrl('https://github.com/iameox/dogor.io-client'))
 
     def __setup_menu(self) -> None:

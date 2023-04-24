@@ -73,7 +73,6 @@ class Application(QApplication):
                 case 0:
                     self.__main_window.canvas().goals(data['goals'])
                     self.__main_window.canvas().setFixedSize(data['width'] / 10, data['height'] / 10)
-                    self.__main_window.setFixedSize(data['width'] / 10, data['height'] / 10)
 
                 case 1:
                     self.__main_window.canvas().entities(data)

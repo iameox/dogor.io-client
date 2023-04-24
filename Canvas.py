@@ -1,11 +1,11 @@
 from PySide6.QtCore import Qt, QPoint
 from PySide6.QtGui import QPainter, QBrush, QColor
-from PySide6.QtWidgets import QLabel, QWidget
+from PySide6.QtWidgets import QLabel
 
 
 class Canvas(QLabel):
-    def __init__(self, parent: QWidget = None):
-        super().__init__(parent)
+    def __init__(self):
+        super().__init__()
 
         self.__goals = list()
         self.__entities = list()
